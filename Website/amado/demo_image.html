@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<p id="test">
+
+</p>
+
+<input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
+<div id="imgTest"></div>
+
+<p>up not down</p>
+
+<input type="file" id="user" accept="image/*" onchange="login2()">
+
+<button  onclick="login2()">Login</button>
+<img id="gully1">
+<p id="gully"> </p>
+
+<script>
+
+
+    function login1() {
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://localhost:8081/home/LoginNew",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/json",
+                "cache-control": "no-cache",
+                "postman-token": "10713d49-4c22-4306-37c4-04bc03727a7d"
+            },
+            "processData": false,
+            "data": "{\"sin_number\":\""+document.getElementById("user").value+"\",\n\"sin_pass\":\""+document.getElementById("pass").value+"\"\n\n}"
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            alert(response.phonenumber.toString())
+        });
+
+    }
+</script>
+<script>
+    function login4() {
+
+        var t = document.getElementById("user");
+        var t1 = btoa(document.getElementById('user'));
+        var k = document.getElementById("test");
+        console.log(t1);
+        k.innerHTML = t1
+
+    }
+</script>
+
+<script>
+    function login(event)
+    {
+        let readers = new FileReader();
+        readers.onload = function()
+        {
+
+            let out = document.getElementById("outnut");
+            out.src = readers.result;
+            let k = out.src.toString();
+            //alert(k.toString());
+        };
+        readers.readAsDataURL(event.target.files[0]);
+
+    }
+</script>
+
+<script>
+    function login2()
+    {
+        let red = new FileReader();
+        red.onload = function ()
+        {
+            let ot = document.getElementById('gully1');
+            ot.src = red.result;
+            let k = red.result;
+            let kk = btoa(k);
+            alert(kk.toString());
+            console.log(kk.toString());
+            document.getElementById("gully").innerHTML = k.toString()
+        };
+        red.readAsDataURL(event.target.files[0])
+    }
+</script>
+
+
+<script>
+    // Convert Base64 to Image
+    $(document).ready(function() {
+        $("#BaseToImage").click(function() {
+            //alert($("#response").val());
+            document.getElementById('preview').setAttribute('src', $("#response").val());
+            $("#preview").show();
+        });
+    });
+    //Convert Image to Base64
+    $(document).ready(function() {
+        $("#inputFileToLoad").change(function() {
+            var filesSelected = document.getElementById("inputFileToLoad").files;
+            if (filesSelected.length > 0) {
+                var fileToLoad = filesSelected[0];
+                var fileReader = new FileReader();
+                fileReader.onload = function(fileLoadedEvent) {
+                    var base64value = fileLoadedEvent.target.result;
+                    console.log(base64value);
+                    $("#response").val(base64value);
+                };
+                fileReader.readAsDataURL(fileToLoad);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+<script type='text/javascript'>
+
+        function encodeImageFileAsURL()
+        {
+            var filesSelected = document.getElementById("inputFileToLoad").files;
+            if (filesSelected.length > 0) {
+                var fileToLoad = filesSelected[0];
+
+                var fileReader = new FileReader();
+
+                fileReader.onload = function (fileLoadedEvent) {
+                    var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+                    var newImage = document.createElement('img');
+                    newImage.src = srcData;
+
+                    document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+                    var k = document.getElementById("imgTest").innerHTML;
+                    alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+                    console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+                };
+                fileReader.readAsDataURL(fileToLoad);
+
+                //alert(fileReader.readAsDataURL(fileToLoad).toString())
+            }
+        }
+
+
+
+</script>
+</body>
+</html>

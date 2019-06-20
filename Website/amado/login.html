@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<input type="text" id="user">
+<input type="password" id="pass">
+<button  onclick="login()">Login</button>
+
+
+<script>
+
+
+    function login() {
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://localhost:8081/home/LoginNew",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/json",
+                "cache-control": "no-cache",
+                "postman-token": "10713d49-4c22-4306-37c4-04bc03727a7d"
+            },
+            "processData": false,
+            "data": "{\"sin_number\":\""+document.getElementById("user").value+"\",\n\"sin_pass\":\""+document.getElementById("pass").value+"\"\n\n}"
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            alert(response.phonenumber.toString())
+        });
+
+    }
+</script>
+</body>
+</html>
